@@ -1,0 +1,82 @@
+/* CSCI 261 Homework 08: Animation
+ *
+ * Author: _INSERT_YOUR_NAME_HERE_
+ *
+ * This program shows a continuous animation, using various functions.
+ */
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <cstdlib>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include "../lib/graphics.h"
+
+using namespace std;
+
+const int WIDTH = 640;             // The width of the graphic window.
+const int HEIGHT = WIDTH * 3 / 4;  // HEIGHT is based on WIDTH to give the eye-pleasing 4:3 aspect ratio.
+const int MARGIN = WIDTH / 20;     // A margin value used to place various things on the screen.
+const double PI = 3.14159;         // Mmmm, pie.
+const int DELAY = 10;              // Slow things down a bit, if necessary.
+
+// Function prototypes.
+
+
+int main( )
+{
+  // This variable is used to control a BGI feature called "double-buffering".
+  // *** You should not change any code that uses this variable! ***
+  int page = 0;
+
+  // Initialize a graphics window and set a few drawing properties.
+  initwindow( WIDTH, HEIGHT, "Animation", MARGIN, MARGIN, true, false );
+
+  // The time variable increments each time the loop iterates. This value should
+  // be passed to your functions and used to calculate their current location.
+  int time = 0;
+
+  // Continue until the user presses a key.
+  while( !kbhit() )
+  {
+    // These two lines of code again control the BGI double-buffering feature.
+    page = page * -1 + 1;   // The value of the page variable alternates between 0 and 1.
+    setactivepage( page );  // This sets the page on which all drawing will occur.
+    setbkcolor( WHITE );    // Set the background color of the active page.
+    cleardevice();          // When drawing on a new page, clear it first.
+
+    ++time;  // Time marches on.
+
+    // ************************ INSERT YOUR CODE BELOW HERE ************************
+	int getX()
+	{
+		return WIDTH/2;
+	}
+
+	int getY( int time, int radius)
+	{
+		return sin(toRadians(time))*((HEIGHT/2)-radius)+HEIGHT/2;
+	}
+
+
+
+
+
+    // ************************ INSERT YOUR CODE ABOVE HERE ************************
+
+    // This line of code is again dealing with the double-buffering.
+    setvisualpage( page );  // This makes the page with the most recent drawing visible.
+
+    delay( DELAY );  // Delay, in milliseconds, defined above.
+  }
+
+  cout << time << endl;
+
+  // Close the graphics window before exiting the program.
+  closegraph();
+
+  // This signals the operating system that everything is ok.
+  return EXIT_SUCCESS;
+}
